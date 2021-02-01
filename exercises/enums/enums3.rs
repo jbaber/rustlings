@@ -1,7 +1,6 @@
 // enums3.rs
 // Address all the TODOs to make the tests pass!
 
-// I AM NOT DONE
 
 enum Message {
   ChangeColor((u8, u8, u8)),
@@ -39,7 +38,20 @@ impl State {
     }
 
     fn process(&mut self, message: Message) {
-        // TODO: create a match expression to process the different message variants
+      match message {
+        Message::ChangeColor(triplet) => {
+            self.change_color(triplet)
+        },
+        Message::Echo(s) => {
+            self.echo(s)
+        },
+        Message::Move(p) => {
+            self.move_position(p)
+        },
+        Message::Quit => {
+            self.quit()
+        },
+      }
     }
 }
 

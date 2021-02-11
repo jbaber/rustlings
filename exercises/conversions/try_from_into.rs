@@ -25,19 +25,34 @@ struct Color {
 // Tuple implementation
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = String;
-    fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {}
+    fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        let valid_range = 0..=255;
+        if valid_range.contains(tuple.0) && valid_range.contains(tuple.1) && valid_range.contains(tuple.2) {
+            Ok(Color{red: tuple.0, green: tuple.1, blue: tuple.2})
+        }
+        Err("One number not in 0-255")
+    }
 }
 
 // Array implementation
 impl TryFrom<[i16; 3]> for Color {
     type Error = String;
-    fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {}
+    fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+        Ok(Color::try_from((arr[0], arr[1], arr[2])));
+    }
 }
 
 // Slice implementation
 impl TryFrom<&[i16]> for Color {
     type Error = String;
-    fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {}
+    fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        if slice.len() != 3 {
+            Ok(Color::try_from((slice.0, slice.1, slice.2)));
+        }
+        else {
+            Err("Not 3 numbers")
+        }
+    }
 }
 
 fn main() {

@@ -25,6 +25,14 @@ struct Person {
 impl FromStr for Person {
     type Err = String;
     fn from_str(s: &str) -> Result<Person, Self::Err> {
+        if s.len() == 0 {
+            return Err("Empty string".to_string());
+        }
+        let pieces = s.split(",").collect::<Vec<&str>>();
+        if pieces.len() != 2 {
+            return Err("Not exactly two elements");
+        }
+        Err("Out of ideas".to_string())
     }
 }
 

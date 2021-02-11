@@ -10,7 +10,6 @@ struct Person {
     age: usize,
 }
 
-// I AM NOT DONE
 
 // Steps:
 // 1. If the length of the provided string is 0 an error should be returned
@@ -30,9 +29,16 @@ impl FromStr for Person {
         }
         let pieces = s.split(",").collect::<Vec<&str>>();
         if pieces.len() != 2 {
-            return Err("Not exactly two elements");
+            return Err(String::from("Not exactly two elements"));
         }
-        Err("Out of ideas".to_string())
+        let name = pieces[0];
+        if name.len() == 0 {
+            return Err("Empty name".to_string());
+        }
+        match pieces[1].parse::<usize>() {
+            Ok(n) => Ok(Person{name: name.to_string(), age: n}),
+            Err(error) => Err(error.to_string()),
+        }
     }
 }
 
